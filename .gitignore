@@ -34,3 +34,6 @@ build/
 
 ### config.properties ###
 config.properties
+
+## env filer ##
+*.env
