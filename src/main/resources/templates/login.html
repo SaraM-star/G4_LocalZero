@@ -2,9 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login | LocalZero</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
+
+<div class="auth-container">
+
+    <h1>LocalZero</h1>
+
+    <p>Login to access your local sustainability community.</p>
+
+    <form action="/login" method="post" class="auth-form">
+
+        <input type="email"
+               name="email"
+               placeholder="Email"
+               required>
+
+        <input type="password"
+               name="password"
+               placeholder="Password"
+               required>
+
+        <button type="submit">
+            Login
+        </button>
+
+    </form>
+
+    <p>Don't have an account?</p>
+
+    <a href="/register">
+        Create account
+    </a>
+
+</div>
 
 </body>
 </html>
