@@ -9,17 +9,123 @@
 </head>
 
 <body>
-<h1>LocalZero</h1>
 
-<a href="/logout">Logout</a>
+<nav class="navbar">
 
-<form id="initiativeForm">
-    <input type="text" id="title" placeholder="Title">
-    <input type="text" id="description" placeholder="Description">
-    <button type="submit">Create initiative</button>
-</form>
+    <h1>LocalZero</h1>
 
-<ul id="initiatives"></ul>
+    <div class="nav-links">
+
+        <a href="/">Home</a>
+
+        <a href="/initiatives">
+            Initiatives
+        </a>
+
+        <a href="/eco-actions">
+            Eco Tracker
+        </a>
+
+        <a href="/forum">
+            Community Forum
+        </a>
+
+        <a href="/inbox">
+            Inbox
+        </a>
+
+        <a href="/logout" class="logout-button">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+<main class="main-container">
+
+    <section class="hero-section">
+
+        <h2>Build a Greener Community</h2>
+
+        <p>
+            Collaborate with your neighborhood through sustainability initiatives,
+            eco-friendly actions, and community engagement.
+        </p>
+
+    </section>
+
+    <section class="dashboard-grid">
+
+        <a class="dashboard-card" href="/initiatives">
+
+            <h3>Initiatives</h3>
+
+            <p>
+                Create and join sustainability projects in your area.
+            </p>
+
+        </a>
+
+        <a class="dashboard-card" href="/eco-actions">
+
+            <h3>Eco Tracker</h3>
+
+            <p>
+                Track your eco-friendly actions and carbon savings.
+            </p>
+
+        </a>
+
+        <a class="dashboard-card" href="/forum">
+
+            <h3>Community Forum</h3>
+
+            <p>
+                Share updates, discussions, and sustainability ideas.
+            </p>
+
+        </a>
+
+        <a class="dashboard-card" href="/inbox">
+
+            <h3>Inbox</h3>
+
+            <p>
+                View messages and notifications from your community.
+            </p>
+
+        </a>
+
+    </section>
+
+    <section class="create-initiative-section">
+
+        <h2>Create Initiative</h2>
+
+        <form id="initiativeForm">
+
+            <input type="text"
+                   id="title"
+                   placeholder="Initiative title"
+                   required>
+
+            <input type="text"
+                   id="description"
+                   placeholder="Initiative description"
+                   required>
+
+            <button type="submit">
+                Create Initiative
+            </button>
+
+        </form>
+
+        <ul id="initiatives"></ul>
+
+    </section>
+
+</main>
 
 </body>
 </html>
