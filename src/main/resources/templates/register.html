@@ -1,51 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="UTF-8">
+
     <title>Register | LocalZero</title>
-    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
 </head>
 
-<body>
+<body class="auth-page">
 
 <div class="auth-container">
 
-    <h1>Create Account</h1>
+    <h1>🌱 Join LocalZero</h1>
 
-    <p>Join your local sustainability network.</p>
+    <p>Create your account and start helping your community</p>
 
-    <form action="/register" method="post" class="auth-form">
+    <form action="/register" method="post">
 
-        <input type="text"
-               name="name"
-               placeholder="Full name"
-               required>
+        <input
+                type="text"
+                name="name"
+                placeholder="Full name"
+                required>
 
-        <input type="text"
-               name="location"
-               placeholder="Location / Neighborhood"
-               required>
+        <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                required>
 
-        <input type="email"
-               name="email"
-               placeholder="Email"
-               required>
+        <input
+                type="text"
+                name="location"
+                placeholder="Location">
 
-        <input type="password"
-               name="password"
-               placeholder="Password"
-               required>
+        <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required>
 
         <button type="submit">
-            Register
+
+            Create account
+
         </button>
 
     </form>
 
-    <p>Already have an account?</p>
+    <p>
+        Already have an account?
+    </p>
 
-    <a href="/login">
+    <a class="auth-link" href="/login">
+
         Login here
+
     </a>
 
 </div>
