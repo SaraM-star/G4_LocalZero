@@ -2,13 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
-
     <title>Register | LocalZero</title>
-
     <link rel="stylesheet" th:href="@{/css/style.css}">
-
 </head>
 
 <body class="auth-page">
@@ -17,7 +13,7 @@
 
     <h1>🌱 Join LocalZero</h1>
 
-    <p>Create your account and start helping your community</p>
+    <p>Create your account and choose your neighborhood</p>
 
     <form action="/register" method="post">
 
@@ -33,10 +29,23 @@
                 placeholder="Email"
                 required>
 
-        <input
-                type="text"
-                name="location"
-                placeholder="Location">
+        <select name="location" required>
+            <option value="">
+                Choose Neighborhood
+            </option>
+
+            <option value="Neighborhood A">
+                Neighborhood A
+            </option>
+
+            <option value="Neighborhood B">
+                Neighborhood B
+            </option>
+
+            <option value="Neighborhood C">
+                Neighborhood C
+            </option>
+        </select>
 
         <input
                 type="password"
@@ -45,9 +54,7 @@
                 required>
 
         <button type="submit">
-
             Create account
-
         </button>
 
     </form>
@@ -57,9 +64,7 @@
     </p>
 
     <a class="auth-link" href="/login">
-
         Login here
-
     </a>
 
 </div>

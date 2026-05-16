@@ -121,6 +121,11 @@ textarea {
     font-size: 15px;
 }
 
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
 button {
     background: #2f7d4c;
     color: white;
@@ -135,6 +140,8 @@ button {
 button:hover {
     background: #25663d;
 }
+
+/* Auth pages */
 
 .auth-page {
     min-height: 100vh;
@@ -165,17 +172,7 @@ button:hover {
     font-weight: bold;
 }
 
-#initiatives {
-    margin-top: 20px;
-    list-style: none;
-}
-
-#initiatives li {
-    background: #f3f7f2;
-    margin-bottom: 10px;
-    padding: 14px;
-    border-radius: 14px;
-}
+/* Initiative cards */
 
 .initiative-list {
     display: grid;
@@ -190,6 +187,13 @@ button:hover {
     border-radius: 20px;
     padding: 22px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.initiative-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
 }
 
 .initiative-card h3 {
@@ -219,4 +223,75 @@ button:hover {
 
 .join-button:hover {
     background: #5da456;
+}
+
+.joined-button {
+    width: 100%;
+    background: #9fb7a4;
+    cursor: not-allowed;
+}
+
+.creator-actions-top {
+    display: flex;
+    gap: 8px;
+}
+
+.creator-actions-top button {
+    padding: 8px 12px;
+    font-size: 13px;
+}
+
+.delete-button {
+    background: #c94c4c;
+}
+
+.delete-button:hover {
+    background: #a83d3d;
+}
+
+/* Participants dropdown */
+
+.participants-dropdown {
+    margin-top: 18px;
+    background: #eef7ec;
+    border-radius: 14px;
+    padding: 12px;
+}
+
+.participants-dropdown summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #2f7d4c;
+}
+
+.participants-table {
+    margin-top: 12px;
+}
+
+.participant-header,
+.participant-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #d4e4d0;
+}
+
+.participant-header {
+    font-weight: bold;
+    color: #38513f;
+}
+
+#editForm{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+#editForm textarea{
+    min-height:100px;
+}
+
+#editForm button{
+    flex:1;
 }
