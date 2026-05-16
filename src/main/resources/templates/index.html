@@ -1,119 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="UTF-8">
+
     <title>LocalZero</title>
 
-    <link rel="stylesheet" href="/css/style.css">
     <script src="/js/app.js" defer></script>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
 </head>
 
 <body>
 
 <nav class="navbar">
 
-    <h1>LocalZero</h1>
+    <h1 class="logo">
+
+        🌱 LocalZero
+
+    </h1>
 
     <div class="nav-links">
 
-        <a href="/">Home</a>
+        <a href="#">Home</a>
 
-        <a href="/initiatives">
-            Initiatives
-        </a>
+        <a href="#">Initiatives</a>
 
-        <a href="/eco-actions">
-            Eco Tracker
-        </a>
+        <a href="#">Eco Tracker</a>
 
-        <a href="/forum">
-            Community Forum
-        </a>
+        <a href="/logout"
+           class="logout-button">
 
-        <a href="/inbox">
-            Inbox
-        </a>
-
-        <a href="/logout" class="logout-button">
             Logout
+
         </a>
 
     </div>
 
 </nav>
 
-<main class="main-container">
+
+<div class="main-container">
 
     <section class="hero-section">
 
-        <h2>Build a Greener Community</h2>
+        <h2>
+            Welcome to your neighborhood community
+        </h2>
 
         <p>
-            Collaborate with your neighborhood through sustainability initiatives,
-            eco-friendly actions, and community engagement.
+
+            Discover local initiatives, connect with people,
+            reduce environmental impact and create positive
+            change together.
+
         </p>
 
     </section>
 
-    <section class="dashboard-grid">
 
-        <a class="dashboard-card" href="/initiatives">
+    <div class="dashboard-grid">
 
-            <h3>Initiatives</h3>
+        <div class="dashboard-card">
 
-            <p>
-                Create and join sustainability projects in your area.
-            </p>
-
-        </a>
-
-        <a class="dashboard-card" href="/eco-actions">
-
-            <h3>Eco Tracker</h3>
+            <h3>
+                🌍 Community Initiatives
+            </h3>
 
             <p>
-                Track your eco-friendly actions and carbon savings.
+
+                View and join environmental activities
+                around your area.
+
             </p>
 
-        </a>
+        </div>
 
-        <a class="dashboard-card" href="/forum">
+        <div class="dashboard-card">
 
-            <h3>Community Forum</h3>
+            <h3>
+                ♻ Eco Tracker
+            </h3>
 
             <p>
-                Share updates, discussions, and sustainability ideas.
+
+                Track your sustainability progress.
+
             </p>
 
-        </a>
+        </div>
 
-        <a class="dashboard-card" href="/inbox">
+        <div class="dashboard-card">
 
-            <h3>Inbox</h3>
+            <h3>
+                👥 Community Members
+            </h3>
 
             <p>
-                View messages and notifications from your community.
+
+                Connect with people nearby.
+
             </p>
 
-        </a>
+        </div>
 
-    </section>
+    </div>
+
 
     <section class="create-initiative-section">
 
-        <h2>Create Initiative</h2>
+        <h2>
+
+            Create Initiative
+
+        </h2>
 
         <form id="initiativeForm">
 
-            <input type="text"
-                   id="title"
-                   placeholder="Initiative title"
-                   required>
+            <input
+                    type="text"
+                    id="title"
+                    placeholder="Initiative title"
+                    required>
 
-            <input type="text"
-                   id="description"
-                   placeholder="Initiative description"
-                   required>
+            <textarea
+                    id="description"
+                    placeholder="Description"
+                    required></textarea>
+
+            <input
+                    type="text"
+                    id="location"
+                    placeholder="Location"
+                    required>
+
+            <input
+                    type="text"
+                    id="duration"
+                    placeholder="Duration, e.g. 2 weeks"
+                    required>
+
+            <select id="category" required>
+                <option value="">Choose category</option>
+                <option value="Tool Sharing">Tool Sharing</option>
+                <option value="Food Swap">Food Swap</option>
+                <option value="Community Garden">Community Garden</option>
+                <option value="Recycling Drive">Recycling Drive</option>
+                <option value="Ride Sharing">Ride Sharing</option>
+            </select>
+
+            <select id="visibility" required>
+                <option value="">Choose visibility</option>
+                <option value="Public">Public</option>
+                <option value="Neighborhood">Neighborhood only</option>
+            </select>
 
             <button type="submit">
                 Create Initiative
@@ -121,11 +166,11 @@
 
         </form>
 
-        <ul id="initiatives"></ul>
+        <div id="initiatives" class="initiative-list"></div>
 
     </section>
 
-</main>
+</div>
 
 </body>
 </html>
