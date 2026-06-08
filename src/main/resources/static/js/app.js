@@ -1,7 +1,11 @@
 const initiativeForm = document.getElementById("initiativeForm");
 const initiativesContainer = document.getElementById("initiatives");
+const forumTabs = document.getElementById("forumTabs");
+const selectedForumTitle = document.getElementById("selectedForumTitle");
 
 let currentUser = null;
+let visibleForums = [];
+let selectedForumId = null;
 
 async function loadCurrentUser() {
     const response = await fetch("/api/initiatives/current-user");
@@ -11,11 +15,65 @@ async function loadCurrentUser() {
     }
 }
 
+async function loadForums() {
+    forumTabs.innerHTML = "";
+
+    const response = await fetch("/api/forums");
+
+    if (!response.ok) {
+        alert("Could not load forums.");
+        return;
+    }
+
+    visibleForums = await response.json();
+
+    visibleForums.forEach(forum => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "forum-tab";
+        button.textContent = forum.name;
+
+        button.onclick = async function () {
+            selectedForumId = forum.id;
+            selectedForumTitle.textContent = forum.name;
+            await loadInitiatives();
+        };
+
+        forumTabs.appendChild(button);
+    });
+
+    if (visibleForums.length > 0) {
+        selectedForumId = visibleForums[0].id;
+        selectedForumTitle.textContent = visibleForums[0].name;
+        await loadInitiatives();
+    }
+}
+
 async function loadInitiatives() {
     initiativesContainer.innerHTML = "";
 
-    const response = await fetch("/api/initiatives");
+    if(selectedForumId == null){
+        initiativesContainer.innerHTML = "<p>NO forum selected</p>";
+        return;
+    }
+
+    const response = await fetch(`/api/forums/${selectedForumId}/initiatives`);
+
+    if(!response.ok){
+        const errorText =await response.text();
+        console.error("Load initiatives failed:", response.status, errorText);
+        alert("Could not load initiatives for this forum");
+        return;
+    }
+
     const initiatives = await response.json();
+
+    initiativesContainer.innerHTML = "";
+
+    if (initiatives.length === 0){
+        initiativesContainer.innerHTML = "<p>No initiatives in this forum yet </p>";
+        return;
+    }
 
     initiatives.forEach(initiative => {
         const card = document.createElement("div");
@@ -39,7 +97,7 @@ async function loadInitiatives() {
 
                 ${isCreator ? `
                     <div class="creator-actions-top">
-                        <button type="button" onclick='editInitiative(${JSON.stringify(initiative)})'>Edit</button>
+                        <button type="button" onclick='editInitiative(event, ${JSON.stringify(initiative)})'>Edit</button>
                         <button type="button" class="delete-button" onclick="deleteInitiative(${initiative.id})">Delete</button>
                     </div>
                 ` : ""}
@@ -105,12 +163,20 @@ initiativeForm.addEventListener("submit", async function (event) {
     });
 
     if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Create initiative failed:", response.status, errorText);
         alert("Could not create initiative.");
         return;
     }
 
     initiativeForm.reset();
-    await loadInitiatives();
+
+    try{
+        await loadForums();
+    }catch(error){
+        console.error("Initiatives was created, but reload failed:", error);
+        alert("Initiative was created, but the initiatives could not be reloaded.");
+    }
 });
 
 async function joinInitiative(id) {
@@ -143,7 +209,7 @@ async function deleteInitiative(id) {
     await loadInitiatives();
 }
 
-function editInitiative(initiative) {
+function editInitiative(event, initiative) {
 
     const card = event.target.closest(".initiative-card");
 
@@ -265,7 +331,7 @@ function editInitiative(initiative) {
 
 async function init() {
     await loadCurrentUser();
-    await loadInitiatives();
+    await loadForums();
 }
 
 init();
