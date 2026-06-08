@@ -1,4 +1,6 @@
 package org.example.g4_localzero.enums;
 
 public enum Visibility {
+    PUBLIC,
+    NEIGHBORHOOD
 }
