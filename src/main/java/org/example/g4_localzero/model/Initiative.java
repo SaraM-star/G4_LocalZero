@@ -39,6 +39,11 @@ public class Initiative {
     @JsonIgnoreProperties({"password", "roles"})
     private Set<User> participants = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "forum_id")
+    @JsonIgnoreProperties({"parent", "children", "initiatives"})
+    private Forum forum;
+
 
     public Initiative(){}
 
@@ -116,5 +121,13 @@ public class Initiative {
 
     public void setNeighborhood(String neighborhood) {
         this.neighborhood = neighborhood;
+    }
+
+    public Forum getForum() {
+        return forum;
+    }
+
+    public void setForum(Forum forum) {
+        this.forum = forum;
     }
 }
