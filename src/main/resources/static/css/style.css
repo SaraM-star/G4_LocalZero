@@ -295,3 +295,31 @@ button:hover {
 #editForm button{
     flex:1;
 }
+
+.forum-tabs {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.forum-tab {
+    width: auto;
+    padding: 12px 18px;
+    border-radius: 20px;
+    background: #2f7d4c;
+    color: white;
+}
+
+.forum-tab:hover {
+    background: #25663d;
+}
+
+.selected-forum-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2f7d4c;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
