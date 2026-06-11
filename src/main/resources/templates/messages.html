@@ -1,87 +1,107 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
-  <title>Messages</title>
+  <title>Messages | LocalZero</title>
+
+  <script src="/js/app.js" defer></script>
+
+  <link rel="stylesheet"
+        th:href="@{/css/style.css}">
 </head>
+
 <body>
 
-<h1>Messages</h1>
+<nav class="navbar">
 
-<h2>Send Message</h2>
+  <h1 class="logo">🌱 LocalZero</h1>
 
-<form th:action="@{/messages/send-form}" method="post">
+  <div class="nav-links">
+    <a href="/home">Home</a>
+    <a href="#">Initiatives</a>
+    <a href="#">Eco Tracker</a>
+    <a href="/messages/page/10">Messages</a>
 
-  <input type="hidden"
-         name="senderId"
-         th:value="${userId}">
+    <a href="/logout" class="logout-button">
+      Logout
+    </a>
+  </div>
 
-  <p>
-    Receiver ID:
-    <input type="number" name="receiverId" required>
-  </p>
+</nav>
 
-  <p>
-    Subject:
-    <input type="text" name="subject" required>
-  </p>
+<div class="main-container">
 
-  <p>
-    Message:
-  </p>
+  <section class="create-initiative-section">
 
-  <textarea name="content"
-            rows="5"
-            cols="40"
-            required></textarea>
+    <h2>Messages</h2>
 
-  <br><br>
+    <form th:action="@{/messages/send-form}" method="post">
 
-  <button type="submit">
-    Send Message
-  </button>
+      <input type="hidden"
+             name="senderId"
+             th:value="${userId}">
 
-</form>
+      <input type="number"
+             name="receiverId"
+             placeholder="Receiver ID"
+             required>
 
-<hr>
+      <input type="text"
+             name="subject"
+             placeholder="Subject"
+             required>
 
-<h2>Inbox</h2>
+      <textarea name="content"
+                placeholder="Message"
+                required></textarea>
 
-<div th:each="message : ${inbox}">
+      <button type="submit">
+        Send Message
+      </button>
 
-  <p>
-    <strong>From:</strong>
-    <span th:text="${message.sender.name}"></span>
-  </p>
+    </form>
 
-  <p>
-    <strong>Subject:</strong>
-    <span th:text="${message.subject}"></span>
-  </p>
+  </section>
 
-  <p th:text="${message.content}"></p>
+  <section class="create-initiative-section">
 
-  <hr>
+    <h2>Inbox</h2>
 
-</div>
+    <div th:each="message : ${inbox}" class="dashboard-card">
 
-<h2>Sent Messages</h2>
+      <h3 th:text="${message.subject}"></h3>
 
-<div th:each="message : ${sent}">
+      <p>
+        <strong>From:</strong>
+        <span th:text="${message.sender.name}"></span>
+      </p>
 
-  <p>
-    <strong>To:</strong>
-    <span th:text="${message.receiver.name}"></span>
-  </p>
+      <p th:text="${message.content}"></p>
 
-  <p>
-    <strong>Subject:</strong>
-    <span th:text="${message.subject}"></span>
-  </p>
+    </div>
 
-  <p th:text="${message.content}"></p>
+  </section>
 
-  <hr>
+  <section class="create-initiative-section">
+
+    <h2>Sent Messages</h2>
+
+    <div th:each="message : ${sent}" class="dashboard-card">
+
+      <h3 th:text="${message.subject}"></h3>
+
+      <p>
+        <strong>To:</strong>
+        <span th:text="${message.receiver.name}"></span>
+      </p>
+
+      <p th:text="${message.content}"></p>
+
+    </div>
+
+  </section>
 
 </div>
 
