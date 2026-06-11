@@ -43,10 +43,18 @@
              name="senderId"
              th:value="${userId}">
 
-      <input type="number"
-             name="receiverId"
-             placeholder="Receiver ID"
-             required>
+      <select name="receiverId" required>
+
+        <option value="">
+          Choose recipient
+        </option>
+
+        <option th:each="user : ${users}"
+                th:value="${user.id}"
+                th:text="${user.name}">
+        </option>
+
+      </select>
 
       <input type="text"
              name="subject"

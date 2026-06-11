@@ -43,6 +43,10 @@ public class MessageService {
         return messageRepository.findByReceiverOrderBySentAtDesc(receiver);
     }
 
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     public List<Message> getSentMessages(Long userId) {
         User sender = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));

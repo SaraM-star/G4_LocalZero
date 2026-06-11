@@ -25,6 +25,8 @@ public class MessageController {
         model.addAttribute("userId", userId);
         model.addAttribute("messageRequest", new MessageRequest());
 
+        model.addAttribute("users", messageService.getAllUsers());
+
         return "messages";
     }
 
