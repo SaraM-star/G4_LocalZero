@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Messages</title>
+</head>
+<body>
+
+<h1>Messages</h1>
+
+<h2>Send Message</h2>
+
+<form th:action="@{/messages/send-form}" method="post">
+
+  <input type="hidden"
+         name="senderId"
+         th:value="${userId}">
+
+  <p>
+    Receiver ID:
+    <input type="number" name="receiverId" required>
+  </p>
+
+  <p>
+    Subject:
+    <input type="text" name="subject" required>
+  </p>
+
+  <p>
+    Message:
+  </p>
+
+  <textarea name="content"
+            rows="5"
+            cols="40"
+            required></textarea>
+
+  <br><br>
+
+  <button type="submit">
+    Send Message
+  </button>
+
+</form>
+
+<hr>
+
+<h2>Inbox</h2>
+
+<div th:each="message : ${inbox}">
+
+  <p>
+    <strong>From:</strong>
+    <span th:text="${message.sender.name}"></span>
+  </p>
+
+  <p>
+    <strong>Subject:</strong>
+    <span th:text="${message.subject}"></span>
+  </p>
+
+  <p th:text="${message.content}"></p>
+
+  <hr>
+
+</div>
+
+<h2>Sent Messages</h2>
+
+<div th:each="message : ${sent}">
+
+  <p>
+    <strong>To:</strong>
+    <span th:text="${message.receiver.name}"></span>
+  </p>
+
+  <p>
+    <strong>Subject:</strong>
+    <span th:text="${message.subject}"></span>
+  </p>
+
+  <p th:text="${message.content}"></p>
+
+  <hr>
+
+</div>
+
+</body>
+</html>
