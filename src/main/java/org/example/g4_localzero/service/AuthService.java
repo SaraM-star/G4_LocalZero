@@ -26,6 +26,7 @@ public class AuthService {
                 .location(request.getLocation())
                 .email(request.getEmail())
                 .password(request.getPassword())
+                .active(true)
                 .roles(Set.of(UserRole.RESIDENT))
                 .build();
 
@@ -34,7 +35,15 @@ public class AuthService {
 
     public User login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() ->
+                        new RuntimeException("User not found")
+                );
+
+        if (!user.isActive()) {
+            throw new RuntimeException(
+                    "This account has been deactivated"
+            );
+        }
 
         if (!user.getPassword().equals(request.getPassword())) {
             throw new RuntimeException("Wrong password");

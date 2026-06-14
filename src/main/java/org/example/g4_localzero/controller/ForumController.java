@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import org.example.g4_localzero.model.Forum;
 import org.example.g4_localzero.model.Initiative;
 import org.example.g4_localzero.model.User;
+import org.example.g4_localzero.service.CurrentUserService;
 import org.example.g4_localzero.service.ForumService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,31 +15,39 @@ import java.util.List;
 public class ForumController {
 
     private final ForumService forumService;
+    private final CurrentUserService currentUserService;
 
-    public ForumController(ForumService forumService) {
+    public ForumController(
+            ForumService forumService,
+            CurrentUserService currentUserService) {
+
         this.forumService = forumService;
+        this.currentUserService = currentUserService;
     }
 
     @GetMapping
-    public List<Forum> getVisibleForums(HttpSession session) {
-        User loggedInUser = getLoggedInUser(session);
-        return forumService.getVisibleForums(loggedInUser);
+    public List<Forum> getVisibleForums(
+            HttpSession session) {
+
+        User loggedInUser =
+                currentUserService.requireActiveUser(session);
+
+        return forumService
+                .getVisibleForums(loggedInUser);
     }
 
     @GetMapping("/{forumId}/initiatives")
-    public List<Initiative> getInitiativesForForum(@PathVariable Long forumId,
-                                                   HttpSession session) {
-        User loggedInUser = getLoggedInUser(session);
-        return forumService.getInitiativesForForum(forumId, loggedInUser);
-    }
+    public List<Initiative> getInitiativesForForum(
+            @PathVariable Long forumId,
+            HttpSession session) {
 
-    private User getLoggedInUser(HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        User loggedInUser =
+                currentUserService.requireActiveUser(session);
 
-        if (loggedInUser == null) {
-            throw new RuntimeException("You must be logged in");
-        }
-
-        return loggedInUser;
+        return forumService
+                .getInitiativesForForum(
+                        forumId,
+                        loggedInUser
+                );
     }
 }

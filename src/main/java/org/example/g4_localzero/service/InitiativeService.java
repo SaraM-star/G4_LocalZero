@@ -1,5 +1,6 @@
 package org.example.g4_localzero.service;
 
+import org.example.g4_localzero.exception.ForbiddenOperationException;
 import org.example.g4_localzero.enums.ForumType;
 import org.example.g4_localzero.model.Forum;
 import org.example.g4_localzero.model.Initiative;
@@ -19,15 +20,20 @@ public class InitiativeService {
     private final UserRepository userRepository;
     private final ForumRepository forumRepository;
     private final ForumAccessPolicy forumAccessPolicy;
+    private final AuthorizationPolicy authorizationPolicy;
 
-    public InitiativeService(InitiativeRepository initiativeRepository,
-                             UserRepository userRepository,
-                             ForumRepository forumRepository,
-                             ForumAccessPolicy forumAccessPolicy) {
+    public InitiativeService(
+            InitiativeRepository initiativeRepository,
+            UserRepository userRepository,
+            ForumRepository forumRepository,
+            ForumAccessPolicy forumAccessPolicy,
+            AuthorizationPolicy authorizationPolicy) {
+
         this.initiativeRepository = initiativeRepository;
         this.userRepository = userRepository;
         this.forumRepository = forumRepository;
         this.forumAccessPolicy = forumAccessPolicy;
+        this.authorizationPolicy = authorizationPolicy;
     }
 
     public List<Initiative> getVisibleInitiatives(User user) {
@@ -78,12 +84,11 @@ public class InitiativeService {
         Initiative initiative = initiativeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Initiative not found"));
 
-        User creator = userRepository.findById(sessionUser.getId())
+        User actingUser = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (initiative.getCreator() == null
-                || !initiative.getCreator().getId().equals(sessionUser.getId())) {
-            throw new RuntimeException("Only the creator can edit this initiative");
+        if (! authorizationPolicy.canEditInitiative(actingUser, initiative)){
+            throw new ForbiddenOperationException("Only the creator can edit this initiative");
         }
 
         initiative.setTitle(updated.getTitle());
@@ -93,18 +98,33 @@ public class InitiativeService {
         initiative.setCategory(updated.getCategory());
         initiative.setVisibility(updated.getVisibility());
 
-        placeInitiativeInCorrectForum(initiative, creator);
+        placeInitiativeInCorrectForum(initiative, actingUser);
 
         return initiativeRepository.save(initiative);
     }
 
-    public void deleteInitiative(Long id, User sessionUser) {
-        Initiative initiative = initiativeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Initiative not found"));
+    public void deleteInitiative(
+            Long id,
+            User sessionUser) {
 
-        if (initiative.getCreator() == null
-                || !initiative.getCreator().getId().equals(sessionUser.getId())) {
-            throw new RuntimeException("Only the creator can delete this initiative");
+        Initiative initiative = initiativeRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Initiative not found")
+                );
+
+        User actingUser = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() ->
+                        new RuntimeException("User not found")
+                );
+
+        if (!authorizationPolicy.canDeleteInitiative(
+                actingUser,
+                initiative)) {
+
+            throw new ForbiddenOperationException(
+                    "Only the creator or a community organizer "
+                            + "can delete this initiative"
+            );
         }
 
         initiativeRepository.delete(initiative);
