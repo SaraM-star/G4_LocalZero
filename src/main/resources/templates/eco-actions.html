@@ -1,10 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Eco Tracker | LocalZero</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
 </head>
+
 <body>
+
+<nav class="navbar">
+
+    <h1 class="logo">🌱 LocalZero</h1>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="#">Initiatives</a>
+        <a href="/eco-actions">Eco Tracker</a>
+        <a href="/messages">Messages</a>
+
+        <a href="/logout" class="logout-button">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+<div class="main-container">
+
+    <section class="hero-section">
+
+        <h2>Eco Tracker</h2>
+
+        <p>
+            Log your personal sustainability actions and track your estimated CO₂ savings.
+        </p>
+
+    </section>
+
+    <section class="create-initiative-section">
+
+        <h2>Log Eco Action</h2>
+
+        <form th:action="@{/eco-actions}" method="post">
+
+            <select name="actionType" required>
+                <option value="">Choose eco action</option>
+                <option value="BIKE">Bike instead of car</option>
+                <option value="VEGETARIAN_MEAL">Vegetarian meal</option>
+                <option value="RECYCLE">Recycle</option>
+                <option value="PUBLIC_TRANSPORT">Public transport</option>
+            </select>
+
+            <input
+                    type="number"
+                    name="amount"
+                    min="0.1"
+                    step="0.1"
+                    placeholder="Amount, e.g. km, meals or kg"
+                    required>
+
+            <button type="submit">
+                Log Action
+            </button>
+
+        </form>
+
+    </section>
+
+    <section class="create-initiative-section">
+
+        <h2>Your Progress</h2>
+
+        <div class="dashboard-card">
+
+            <h3>
+                Total CO₂ saved:
+                <span th:text="${totalCo2Saved}">0</span>
+                kg
+            </h3>
+
+        </div>
+
+    </section>
+
+    <section class="create-initiative-section">
+
+        <h2>Logged Actions</h2>
+
+        <div th:if="${#lists.isEmpty(ecoActions)}" class="dashboard-card">
+            <p>No eco-actions logged yet.</p>
+        </div>
+
+        <div th:each="action : ${ecoActions}" class="dashboard-card">
+
+            <h3 th:text="${action.actionType}">Action type</h3>
+
+            <p>
+                Amount:
+                <span th:text="${action.amount}">0</span>
+            </p>
+
+            <p>
+                CO₂ saved:
+                <span th:text="${action.co2Saved}">0</span>
+                kg
+            </p>
+
+            <p>
+                Date:
+                <span th:text="${#temporals.format(action.createdAt, 'yyyy-MM-dd HH:mm')}">
+                    date
+                </span>
+            </p>
+
+        </div>
+
+    </section>
+
+</div>
 
 </body>
 </html>

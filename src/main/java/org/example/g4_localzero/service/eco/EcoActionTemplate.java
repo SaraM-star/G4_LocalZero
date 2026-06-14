@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public abstract class EcoActionTemplate {
 
-    public final EcoAction createAction(User user, double amount) {
+    public final EcoAction createEcoAction(User user, double amount) {
         validateAmount(amount);
 
         double co2Saved = calculateCo2Saved(amount);
