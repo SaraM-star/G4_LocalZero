@@ -59,6 +59,18 @@ public class InitiativeController {
         return initiativeService.joinInitiative(id, loggedInUser);
     }
 
+    @PostMapping("/{id}/leave")
+    public Initiative leaveInitiative(@PathVariable Long id, HttpSession session){
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+        if (loggedInUser == null){
+            throw new RuntimeException("You must be logged in");
+        }
+        return initiativeService.leaveInitiative(id, loggedInUser);
+    }
+
+
+
     @PutMapping("/{id}")
     public Initiative updateInitiative(@PathVariable Long id,
                                        @RequestBody Initiative initiative,

@@ -74,6 +74,17 @@ public class InitiativeService {
         return initiativeRepository.save(initiative);
     }
 
+    public Initiative leaveInitiative(Long id, User sessionUser){
+        Initiative initiative = initiativeRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Initiative not found"));
+
+        User user = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        initiative.getParticipants().remove(user);
+        return initiativeRepository.save(initiative);
+    }
+
     public Initiative updateInitiative(Long id, Initiative updated, User sessionUser) {
         Initiative initiative = initiativeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Initiative not found"));
