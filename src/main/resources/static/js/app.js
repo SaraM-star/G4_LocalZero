@@ -115,8 +115,8 @@ async function loadInitiatives() {
             </div>
 
             ${hasJoined ? `
-                <button class="joined-button" type="button" disabled>
-                    Joined
+                <button class="leave-button" type="button" onclick="leaveInitiative(${initiative.id})" style="background-color: #ff4d4d; color: white;">
+                    Leave Initiative
                 </button>
             ` : `
                 <button class="join-button" type="button" onclick="joinInitiative(${initiative.id})">
@@ -186,6 +186,19 @@ async function joinInitiative(id) {
 
     if (!response.ok) {
         alert("Could not join initiative.");
+        return;
+    }
+
+    await loadInitiatives();
+}
+
+async function leaveInitiative(id){
+    const response = await fetch(`/api/initiatives/${id}/leave`, {
+        method: "POST"
+});
+
+    if (!response.ok){
+        alert("Could not leave initiative");
         return;
     }
 
