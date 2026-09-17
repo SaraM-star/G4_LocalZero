@@ -55,7 +55,7 @@ public class AuthController {
         return "redirect:/login";
     }
 
-    @PostMapping("update role")
+    @PostMapping("/update-role")
     public String updateRole(@RequestParam String role, HttpSession session){
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null)

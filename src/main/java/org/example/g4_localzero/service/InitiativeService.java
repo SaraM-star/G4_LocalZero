@@ -39,12 +39,14 @@ public class InitiativeService {
 
         for (Initiative initiative : allInitiatives) {
 
+            if (initiative.getForum() != null && forumAccessPolicy.canViewForum(user, initiative.getForum())){
+
             boolean isMyNeighbourhood = initiative.getNeighborhood() != null && initiative.getNeighborhood().equalsIgnoreCase(user.getLocation());
 
-            if (initiative.getForum() != null
-                    && forumAccessPolicy.canViewForum(user, initiative.getForum())
-                    && (isOrganizer || isMyNeighbourhood)) {
+
+            if (isOrganizer || isMyNeighbourhood){
                 visibleInitiatives.add(initiative);
+            }
             }
         }
 
