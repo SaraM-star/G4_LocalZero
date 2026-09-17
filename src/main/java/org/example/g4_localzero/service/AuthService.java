@@ -42,4 +42,20 @@ public class AuthService {
 
         return user;
     }
+
+    public void updateUserRole(Long userId, String roleName){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        UserRole newRole = UserRole.valueOf(roleName.toUpperCase());
+        user.getRoles().add(newRole);
+        userRepository.save(user);
+
+    }
+
+    public User getUserbyId(Long userId){
+        return userRepository.findById(userId)
+                .orElseThrow(()-> new RuntimeException("User not found"));
+
+    }
 }

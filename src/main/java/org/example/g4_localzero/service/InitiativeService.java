@@ -1,6 +1,7 @@
 package org.example.g4_localzero.service;
 
 import org.example.g4_localzero.enums.ForumType;
+import org.example.g4_localzero.enums.UserRole;
 import org.example.g4_localzero.model.Forum;
 import org.example.g4_localzero.model.Initiative;
 import org.example.g4_localzero.model.User;
@@ -34,9 +35,15 @@ public class InitiativeService {
         List<Initiative> allInitiatives = initiativeRepository.findAll();
         List<Initiative> visibleInitiatives = new ArrayList<>();
 
+        boolean isOrganizer = user.getRoles() != null && user.getRoles().contains(UserRole.COMMUNITY_ORGANIZER);
+
         for (Initiative initiative : allInitiatives) {
+
+            boolean isMyNeighbourhood = initiative.getNeighborhood() != null && initiative.getNeighborhood().equalsIgnoreCase(user.getLocation());
+
             if (initiative.getForum() != null
-                    && forumAccessPolicy.canViewForum(user, initiative.getForum())) {
+                    && forumAccessPolicy.canViewForum(user, initiative.getForum())
+                    && (isOrganizer || isMyNeighbourhood)) {
                 visibleInitiatives.add(initiative);
             }
         }
