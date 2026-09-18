@@ -47,7 +47,9 @@ public class AuthService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        UserRole newRole = UserRole.valueOf(roleName.toUpperCase());
+        user.getRoles().clear();
+
+        UserRole newRole = UserRole.valueOf(roleName);
         user.getRoles().add(newRole);
         userRepository.save(user);
 
