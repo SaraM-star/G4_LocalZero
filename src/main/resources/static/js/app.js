@@ -142,42 +142,44 @@ async function loadInitiatives() {
     });
 }
 
-initiativeForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
+if (initiativeForm) {
+    initiativeForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
 
-    const initiative = {
-        title: document.getElementById("title").value,
-        description: document.getElementById("description").value,
-        location: document.getElementById("location").value,
-        duration: document.getElementById("duration").value,
-        category: document.getElementById("category").value,
-        visibility: document.getElementById("visibility").value
-    };
+        const initiative = {
+            title: document.getElementById("title").value,
+            description: document.getElementById("description").value,
+            location: document.getElementById("location").value,
+            duration: document.getElementById("duration").value,
+            category: document.getElementById("category").value,
+            visibility: document.getElementById("visibility").value
+        };
 
-    const response = await fetch("/api/initiatives", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(initiative)
+        const response = await fetch("/api/initiatives", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(initiative)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Create initiative failed:", response.status, errorText);
+            alert("Could not create initiative.");
+            return;
+        }
+
+        initiativeForm.reset();
+
+        try {
+            await loadForums();
+        } catch (error) {
+            console.error("Initiatives was created, but reload failed:", error);
+            alert("Initiative was created, but the initiatives could not be reloaded.");
+        }
     });
-
-    if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Create initiative failed:", response.status, errorText);
-        alert("Could not create initiative.");
-        return;
-    }
-
-    initiativeForm.reset();
-
-    try{
-        await loadForums();
-    }catch(error){
-        console.error("Initiatives was created, but reload failed:", error);
-        alert("Initiative was created, but the initiatives could not be reloaded.");
-    }
-});
+}
 
 async function joinInitiative(id) {
     const response = await fetch(`/api/initiatives/${id}/join`, {
