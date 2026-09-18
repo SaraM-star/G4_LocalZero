@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Community Members - LocalZero</title>
+    <script src="/js/app.js" defer></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<nav class="navbar">
+    <h1 class="logo">
+        <a href="/" style="text-decoration: none; color: inherit;">🌱 LocalZero</a>
+    </h1>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="#">Initiatives</a>
+        <a href="/messages">Messages</a>
+        <form action="/update-role" method="POST" style="display: inline-block;">
+            <input type="hidden" name="role" value="RESIDENT">
+            <button type="submit" class="logout-button" style="background-color: #2e7d32; margin-right: 5px;">Resident</button>
+        </form>
+        <form action="/update-role" method="POST" style="display: inline-block;">
+            <input type="hidden" name="role" value="COMMUNITY_ORGANIZER">
+            <button type="submit" class="logout-button" style="background-color: #2e7d32; margin-right: 15px;">Organizer</button>
+        </form>
+        <a href="/logout" class="logout-button">Logout</a>
+    </div>
+</nav>
+
+<div class="main-container">
+    <section class="create-initiative-section">
+        <h2>Create Initiative</h2>
+        <form id="initiativeForm">
+            <input type="text" id="title" placeholder="Initiative title" required>
+            <textarea id="description" placeholder="Description" required></textarea>
+            <input type="text" id="location" placeholder="Location" required>
+            <input type="text" id="duration" placeholder="Duration, e.g. 2 weeks" required>
+            <select id="category" required>
+                <option value="">Choose category</option>
+                <option value="Tool Sharing">Tool Sharing</option>
+                <option value="Food Swap">Food Swap</option>
+                <option value="Community Garden">Community Garden</option>
+                <option value="Recycling Drive">Recycling Drive</option>
+                <option value="Ride Sharing">Ride Sharing</option>
+            </select>
+            <select id="visibility" required>
+                <option value="">Choose forum</option>
+                <option value="Public">Global Forum - visible to all groups</option>
+                <option value="Neighborhood">My Neighborhood Forum only</option>
+            </select>
+            <button type="submit">Create Initiative</button>
+        </form>
+
+        <div id="forumTabs" class="forum-tabs"></div>
+        <div id="selectedForumTitle" class="selected-forum-title"></div>
+        <div id="initiatives" class="initiative-list"></div>
+    </section>
+</div>
+
+</body>
+</html>

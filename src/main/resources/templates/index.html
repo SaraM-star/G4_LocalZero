@@ -21,8 +21,8 @@
 
     <h1 class="logo">
         <a href="/" style="text-decoration: none; color: inherit;">
-        🌱 LocalZero
-         </a>
+            🌱 LocalZero
+        </a>
     </h1>
 
     <div class="nav-links">
@@ -73,9 +73,9 @@
 
     </section>
 
-    
 
-        <a href="/eco-actions" class="dashboard-card-link">
+
+    <a href="/eco-actions" class="dashboard-card-link">
         <div class="dashboard-card">
 
             <h3>
@@ -89,8 +89,9 @@
             </p>
 
         </div>
-        </a>
+    </a>
 
+    <a href="/community-members" class="dashboard-card-link">
         <div class="dashboard-card">
 
             <h3>
@@ -99,73 +100,17 @@
 
             <p>
 
-                Connect with people nearby.
+                Connect with people nearby and create initiatives.
 
             </p>
 
         </div>
+    </a>
 
-    </div>
-
-
-    <section class="create-initiative-section">
-
-        <h2>
-
-            Create Initiative
-
-        </h2>
-
-        <form id="initiativeForm">
-
-            <input
-                    type="text"
-                    id="title"
-                    placeholder="Initiative title"
-                    required>
-
-            <textarea
-                    id="description"
-                    placeholder="Description"
-                    required></textarea>
-
-            <input
-                    type="text"
-                    id="location"
-                    placeholder="Location"
-                    required>
-
-            <input
-                    type="text"
-                    id="duration"
-                    placeholder="Duration, e.g. 2 weeks"
-                    required>
-
-            <select id="category" required>
-                <option value="">Choose category</option>
-                <option value="Tool Sharing">Tool Sharing</option>
-                <option value="Food Swap">Food Swap</option>
-                <option value="Community Garden">Community Garden</option>
-                <option value="Recycling Drive">Recycling Drive</option>
-                <option value="Ride Sharing">Ride Sharing</option>
-            </select>
-
-            <select id="visibility" required>
-                <option value="">Choose forum</option>
-                <option value="Public">Global Forum - visible to all groups</option>
-                <option value="Neighborhood">My Neighborhood Forum only</option>
-            </select>
-
-            <button type="submit">
-                Create Initiative
-            </button>
-
-        </form>
-
+    <!-- Här visas alla forum-flikar och initiativ på startsidan -->
+    <section class="initiatives-display-section" style="margin-top: 40px;">
         <div id="forumTabs" class="forum-tabs"></div>
-
         <div id="selectedForumTitle" class="selected-forum-title"></div>
-
         <div id="initiatives" class="initiative-list"></div>
     </section>
 

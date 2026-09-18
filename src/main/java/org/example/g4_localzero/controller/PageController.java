@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
 @Controller
 public class PageController {
 
@@ -18,6 +17,14 @@ public class PageController {
         return "index";
     }
 
+    @GetMapping("/community-members")
+    public String communityMembers(HttpSession session) {
 
+        if (session.getAttribute("loggedInUser") == null) {
+            return "redirect:/login";
+        }
+
+        return "community-members";
+    }
 
 }
