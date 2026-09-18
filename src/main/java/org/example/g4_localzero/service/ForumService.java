@@ -2,6 +2,7 @@ package org.example.g4_localzero.service;
 
 import org.example.g4_localzero.enums.ForumType;
 import org.example.g4_localzero.model.Forum;
+import org.example.g4_localzero.enums.UserRole;
 import org.example.g4_localzero.model.Initiative;
 import org.example.g4_localzero.model.User;
 import org.example.g4_localzero.repository.ForumRepository;
@@ -30,10 +31,19 @@ public class ForumService {
         List<Forum> allForums = forumRepository.findAll();
         List<Forum> visibleForums = new ArrayList<>();
 
+        boolean isOrganizer = user.getRoles() != null && user.getRoles().contains(UserRole.COMMUNITY_ORGANIZER);
+
         for (Forum forum : allForums) {
             if (forum.getForumType() != ForumType.ROOT
                     && forumAccessPolicy.canViewForum(user, forum)) {
-                visibleForums.add(forum);
+                boolean isGlobal = forum.getForumType() == ForumType.GLOBAL
+                        || (forum.getName() != null && forum.getName().toLowerCase().contains("global"));
+
+               if (isGlobal && !isOrganizer){
+                   continue;
+               }
+
+               visibleForums.add(forum);
             }
         }
 
@@ -48,6 +58,15 @@ public class ForumService {
             throw new RuntimeException("You are not allowed to view this forum");
         }
 
+        boolean isOrganizer = user.getRoles() != null && user.getRoles().contains(UserRole.COMMUNITY_ORGANIZER);
+        boolean isGlobal = forum.getForumType() == ForumType.GLOBAL
+        || (forum.getName() != null && forum.getName().toLowerCase().contains("global"));
+
+        if (isGlobal && !isOrganizer) {
+            throw new RuntimeException("Access denied: Residents cannot view global initiatives");
+        }
+
+
         return initiativeRepository.findByForum(forum);
     }
-}
+    }

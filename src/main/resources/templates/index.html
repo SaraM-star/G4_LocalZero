@@ -31,11 +31,20 @@
 
         <a href="#">Initiatives</a>
 
-
         <a href="/messages">Messages</a>
 
-        <a href="/logout"
-           class="logout-button">
+        <form action="/update-role" method="POST" style="display: inline-block;">
+            <input type="hidden" name="role" value="RESIDENT">
+            <button type="submit" class="logout-button" style="background-color: #2e7d32; margin-right: 5px;">Resident</button>
+        </form>
+
+        <form action="/update-role" method="POST" style="display: inline-block;">
+            <input type="hidden" name="role" value="COMMUNITY_ORGANIZER">
+            <button type="submit" class="logout-button" style="background-color: #2e7d32; margin-right: 15px;">Organizer</button>
+        </form>
+
+        <a href="/logout" class="logout-button">
+
 
             Logout
 

@@ -54,4 +54,20 @@ public class AuthController {
         session.invalidate();
         return "redirect:/login";
     }
+
+    @PostMapping("/update-role")
+    public String updateRole(@RequestParam String role, HttpSession session){
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null)
+        {
+            return "redirect:/login";
+        }
+
+        authService.updateUserRole(loggedInUser.getId(), role);
+        User updateUser = authService.getUserbyId(loggedInUser.getId());
+        session.setAttribute("loggedInUser", updateUser);
+
+        return "redirect:/";
+
+    }
 }
