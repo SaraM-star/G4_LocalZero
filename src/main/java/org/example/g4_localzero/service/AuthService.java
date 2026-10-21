@@ -6,6 +6,7 @@ import org.example.g4_localzero.dto.RegisterRequest;
 import org.example.g4_localzero.enums.UserRole;
 import org.example.g4_localzero.model.User;
 import org.example.g4_localzero.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -15,6 +16,7 @@ import java.util.Set;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public User register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -25,7 +27,7 @@ public class AuthService {
                 .name(request.getName())
                 .location(request.getLocation())
                 .email(request.getEmail())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .roles(Set.of(UserRole.RESIDENT))
                 .build();
 
@@ -36,7 +38,7 @@ public class AuthService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!user.getPassword().equals(request.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())){
             throw new RuntimeException("Wrong password");
         }
 
